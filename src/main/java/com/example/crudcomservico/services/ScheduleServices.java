@@ -24,6 +24,11 @@ public class ScheduleServices {
         return repository.findById(id).get().getPaymentDate();
     }
 
+    public Schedule findById(Long id) throws Exception{
+
+        return repository.findById(id).orElseThrow(()-> new RuntimeException("Não encontrado"));
+    }
+
     public List<Schedule> alldata(){
         return repository.findAll();
     }
@@ -32,6 +37,11 @@ public class ScheduleServices {
         newData.setBill(data);
         newData.setPaymentDate(date);
         repository.save(newData);
+
+    }
+
+    public void updateScheduleDate(Schedule schedule){
+           this.repository.save(schedule);
 
     }
 

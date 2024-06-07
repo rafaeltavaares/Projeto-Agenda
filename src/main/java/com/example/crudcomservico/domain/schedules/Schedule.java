@@ -27,7 +27,10 @@ public class Schedule {
     private LocalDate paymentDate;
 
 
-
+    public Schedule(Bill data, LocalDate date){
+        this.bill = data;
+        this.paymentDate = date;
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.crudcomservico.controllers;
 
+import com.example.crudcomservico.DTOs.UpdateDateDTO;
 import com.example.crudcomservico.domain.schedules.Schedule;
 import com.example.crudcomservico.services.BillServices;
 import com.example.crudcomservico.services.ScheduleServices;
@@ -18,6 +19,11 @@ public class ScheduleController {
 
     @Autowired
     private ScheduleServices scheduleServices;
+
+    @PutMapping
+    public void updateDate(@RequestBody UpdateDateDTO updateData) throws Exception {
+        this.services.updateDate(updateData);
+    }
 
 
     @GetMapping

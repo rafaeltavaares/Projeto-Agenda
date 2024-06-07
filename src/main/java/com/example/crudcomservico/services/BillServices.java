@@ -1,14 +1,12 @@
 package com.example.crudcomservico.services;
 
-import com.example.crudcomservico.DTOs.BillDTO;
-import com.example.crudcomservico.DTOs.BillReturnDTO;
-import com.example.crudcomservico.DTOs.BillStatusDetailedDTO;
-import com.example.crudcomservico.DTOs.StatusDTO;
+import com.example.crudcomservico.DTOs.*;
 import com.example.crudcomservico.domain.Bill;
 import com.example.crudcomservico.domain.Status;
 import com.example.crudcomservico.domain.schedules.Schedule;
 import com.example.crudcomservico.repositories.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -33,6 +31,14 @@ public class BillServices {
         return new BillStatusDetailedDTO(bill.getSerialNumber(),bill.getName(), bill.getValue_of_bills(), date ,bill.getStatus());
     }
 
+    public void updateDate(UpdateDateDTO data) throws Exception {
+        Bill billData = this.getDataFromSerialNumber(data.bill_id());
+        Schedule scheduleData = scheduleServices.findById(billData.getId());
+        if(billData.isActive() && billData.getStatus() != Status.PAID){
+            scheduleData.setPaymentDate(data.date());
+            scheduleServices.updateScheduleDate(scheduleData);
+        }
+    }
 
     public Bill getDataFromSerialNumber(UUID serialNumber) throws Exception{
        return repository.findBySerialNumber(serialNumber).orElseThrow(() -> new RuntimeException("Not found"));
