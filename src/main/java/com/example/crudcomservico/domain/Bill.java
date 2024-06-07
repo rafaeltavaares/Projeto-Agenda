@@ -30,6 +30,7 @@ public class Bill {
 
     private LocalDateTime timeStamp;
 
+    private boolean active;
 
     public Bill(BillDTO data){
         this.name = data.name();
@@ -37,8 +38,16 @@ public class Bill {
         this.status = Status.PENDING;
         this.timeStamp = LocalDateTime.now();
         this.serialNumber = UUID.randomUUID();
+        this.active = true;
     }
 
+    public void active(){
+        this.active = true;
+    }
+
+    public void desactive(){
+        this.active = false;
+    }
 
 
 
